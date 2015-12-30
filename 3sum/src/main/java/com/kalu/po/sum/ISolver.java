@@ -2,9 +2,9 @@ package com.kalu.po.sum;
 
 import java.util.List;
 
-import com.kalu.po.sum.dataStructures.Bag;
+import com.kalu.po.sum.dataStructures.Solution;
 
 public interface ISolver {
 
-    public Long solve(List<Integer> elements, Bag[] bags);
+    public Solution solve(List<Integer> elements, int i);
 }

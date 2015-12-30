@@ -5,6 +5,7 @@ import java.util.Collections;
 import java.util.List;
 
 import com.kalu.po.sum.dataStructures.Bag;
+import com.kalu.po.sum.dataStructures.Solution;
 
 public class GreedySolver implements ISolver {
 
@@ -23,6 +24,19 @@ public class GreedySolver implements ISolver {
         Long diff = Math.abs(max.sum() - min.sum());
 
         return diff;
+    }
+
+    public Solution solve(List<Integer> elements, int i) {
+        Solution solution = new Solution(i);
+
+        Collections.sort(elements);
+        Collections.reverse(elements);
+        for (Integer element : elements) {
+            Bag min = Collections.min(solution.getAll());
+            min.addElement(element);
+        }
+
+        return solution;
     }
 
 }

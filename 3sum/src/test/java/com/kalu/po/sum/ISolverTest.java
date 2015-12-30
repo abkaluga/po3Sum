@@ -8,12 +8,13 @@ import java.util.Random;
 
 import org.junit.Test;
 
-import com.kalu.po.sum.dataStructures.Bag;
+import com.kalu.po.sum.dataStructures.Solution;
 
 import junit.framework.Assert;
 
 public abstract class ISolverTest {
 
+    private static final int SIZE = 3;
     protected static ISolver objectOfTest;
     private static Integer[] dummyList;
     private static Integer[] tripleSmall;
@@ -54,76 +55,73 @@ public abstract class ISolverTest {
     @Test
     public void antiGreedy() {
         // Setup
-        Long diff;
-        Bag[] bags = { new Bag(), new Bag(), new Bag() };
+        Solution solution;
         List<Integer> list = new ArrayList<Integer>(Arrays.asList(antiGreedy));
         Collections.shuffle(list);
         // Test
-        diff = objectOfTest.solve(list, bags);
+        solution = objectOfTest.solve(list, SIZE);
         // Assert
-        Assert.assertEquals(Long.valueOf(0), diff);
+        Assert.assertEquals(Long.valueOf(0), solution.getDiff());
     }
 
     @Test
     public void tripleBigTest() {
         // Setup
-        Long diff;
-        Bag[] bags = { new Bag(), new Bag(), new Bag() };
+        Solution solution;
         List<Integer> list = new ArrayList<Integer>(Arrays.asList(tripleBig));
         Collections.shuffle(list);
         // Test
-        diff = objectOfTest.solve(list, bags);
+        solution = objectOfTest.solve(list, SIZE);
         // Assert
-        Assert.assertEquals(Long.valueOf(0), diff);
+        Assert.assertEquals(Long.valueOf(0), solution.getDiff());
     }
 
     @Test
     public void tripleSmallTest() {
         // Setup
-        Long diff;
-        Bag[] bags = { new Bag(), new Bag(), new Bag() };
+        Solution solution;
         List<Integer> list = new ArrayList<Integer>(Arrays.asList(tripleSmall));
         Collections.shuffle(list);
         // Test
-        diff = objectOfTest.solve(list, bags);
+        solution = objectOfTest.solve(list, SIZE);
         // Assert
-        Assert.assertEquals(Long.valueOf(0), diff);
+        Assert.assertEquals(Long.valueOf(0), solution.getDiff());
     }
 
     @Test
     public void onlyOnesRemTest() {
         // Setup
-        Long diff;
-        Bag[] bags = { new Bag(), new Bag(), new Bag() };
+        Solution solution;
         List<Integer> list = new ArrayList<Integer>(Arrays.asList(onlyOnesRem));
+        Collections.shuffle(list);
         // Test
-        diff = objectOfTest.solve(list, bags);
+        solution = objectOfTest.solve(list, SIZE);
         // Assert
-        Assert.assertEquals(Long.valueOf(1), diff);
+        Assert.assertEquals(Long.valueOf(1), solution.getDiff());
     }
 
     @Test
     public void onlyOnesTest() {
         // Setup
-        Long diff;
-        Bag[] bags = { new Bag(), new Bag(), new Bag() };
+        Solution solution;
         List<Integer> list = new ArrayList<Integer>(Arrays.asList(onlyOnes));
+        Collections.shuffle(list);
         // Test
-        diff = objectOfTest.solve(list, bags);
+        solution = objectOfTest.solve(list, SIZE);
         // Assert
-        Assert.assertEquals(Long.valueOf(0), diff);
+        Assert.assertEquals(Long.valueOf(0), solution.getDiff());
     }
 
     @Test
     public void dummyTest() {
         // Setup
-        Long diff;
-        Bag[] bags = { new Bag(), new Bag(), new Bag() };
+        Solution solution;
         List<Integer> list = new ArrayList<Integer>(Arrays.asList(dummyList));
+        Collections.shuffle(list);
         // Test
-        diff = objectOfTest.solve(list, bags);
+        solution = objectOfTest.solve(list, SIZE);
         // Assert
-        Assert.assertEquals(Long.valueOf(0), diff);
+        Assert.assertEquals(Long.valueOf(0), solution.getDiff());
     }
 
 }
