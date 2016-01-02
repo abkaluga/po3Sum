@@ -5,7 +5,7 @@ import org.junit.runners.Suite;
 import org.junit.runners.Suite.SuiteClasses;
 
 @RunWith(Suite.class)
-@SuiteClasses({ GreedySolverTest.class, SASolverTest.class })
+@SuiteClasses({ GreedySolverTest.class, KKSolverTest.class })
 public class AllTests {
 
 }

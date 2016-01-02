@@ -10,12 +10,12 @@ import com.kalu.po.sum.dataStructures.Solution;
 
 public class GreedySolver implements ISolver {
 
+    @Override
     public Solution solve(List<Integer> elements, int i) {
         Solution solution = new Solution(i);
         Queue<Bag> bags = new PriorityQueue<Bag>(solution.getAll());
 
-        Collections.sort(elements);
-        Collections.reverse(elements);
+        Collections.sort(elements, Collections.reverseOrder());
         for (Integer element : elements) {
             Bag min = bags.poll();
             min.addElement(element);

@@ -25,13 +25,13 @@ public abstract class ISolverTest {
 
     static {
         dummyList = new Integer[3];
-        onlyOnes = new Integer[9999];
+        onlyOnes = new Integer[999];
         onlyOnesRem = new Integer[1000];
         tripleSmall = new Integer[24];
-        tripleBig = new Integer[999999];
+        tripleBig = new Integer[999];
         Random rand = new Random(42);
         for (int i = 0; i < tripleSmall.length; i += 3) {
-            int num = Math.abs(rand.nextInt(1000));
+            int num = Math.abs(rand.nextInt(9999)) + 1;
             tripleSmall[i + 0] = num;
             tripleSmall[i + 1] = num;
             tripleSmall[i + 2] = num;
@@ -40,7 +40,7 @@ public abstract class ISolverTest {
         for (int i = 0; i < tripleBig.length; i += 3)
 
         {
-            int num = Math.abs(rand.nextInt(100));
+            int num = Math.abs(rand.nextInt(9999)) + 1;
             tripleBig[i + 0] = num;
             tripleBig[i + 1] = num;
             tripleBig[i + 2] = num;
@@ -55,11 +55,13 @@ public abstract class ISolverTest {
     @Test
     public void antiGreedy() {
         // Setup
+        System.out.println("antiGreedyTest");
         Solution solution;
         List<Integer> list = new ArrayList<Integer>(Arrays.asList(antiGreedy));
         Collections.shuffle(list);
         // Test
         solution = objectOfTest.solve(list, SIZE);
+        System.out.println(solution);
         // Assert
         Assert.assertEquals(Long.valueOf(0), solution.getDiff());
     }
@@ -67,11 +69,13 @@ public abstract class ISolverTest {
     @Test
     public void tripleBigTest() {
         // Setup
+        System.out.println("tripleBigTest");
         Solution solution;
         List<Integer> list = new ArrayList<Integer>(Arrays.asList(tripleBig));
         Collections.shuffle(list);
         // Test
         solution = objectOfTest.solve(list, SIZE);
+        System.out.println(solution);
         // Assert
         Assert.assertEquals(Long.valueOf(0), solution.getDiff());
     }
@@ -79,11 +83,13 @@ public abstract class ISolverTest {
     @Test
     public void tripleSmallTest() {
         // Setup
+        System.out.println("tripleSmallTest");
         Solution solution;
         List<Integer> list = new ArrayList<Integer>(Arrays.asList(tripleSmall));
         Collections.shuffle(list);
         // Test
         solution = objectOfTest.solve(list, SIZE);
+        System.out.println(solution);
         // Assert
         Assert.assertEquals(Long.valueOf(0), solution.getDiff());
     }
@@ -91,11 +97,13 @@ public abstract class ISolverTest {
     @Test
     public void onlyOnesRemTest() {
         // Setup
+        System.out.println("onlyOnesRemTest");
         Solution solution;
         List<Integer> list = new ArrayList<Integer>(Arrays.asList(onlyOnesRem));
         Collections.shuffle(list);
         // Test
         solution = objectOfTest.solve(list, SIZE);
+        System.out.println(solution);
         // Assert
         Assert.assertEquals(Long.valueOf(1), solution.getDiff());
     }
@@ -103,11 +111,13 @@ public abstract class ISolverTest {
     @Test
     public void onlyOnesTest() {
         // Setup
+        System.out.println("onlyOnesTest");
         Solution solution;
         List<Integer> list = new ArrayList<Integer>(Arrays.asList(onlyOnes));
         Collections.shuffle(list);
         // Test
         solution = objectOfTest.solve(list, SIZE);
+        System.out.println(solution);
         // Assert
         Assert.assertEquals(Long.valueOf(0), solution.getDiff());
     }

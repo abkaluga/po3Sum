@@ -1,18 +1,22 @@
 package com.kalu.po.sum.dataStructures;
 
 import java.util.Collections;
+import java.util.LinkedList;
 import java.util.List;
-import java.util.concurrent.CopyOnWriteArrayList;
 
 public class Solution {
     List<Bag> bags;
 
     public Solution(int i) {
-        bags = new CopyOnWriteArrayList<Bag>();
+        bags = new LinkedList<Bag>();
         for (int j = 0; j < i; ++j) {
             bags.add(new Bag());
         }
 
+    }
+
+    public Solution(Solution s) {
+        bags = new LinkedList<Bag>(s.bags);
     }
 
     public Bag get(int i) {
