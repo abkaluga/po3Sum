@@ -1,23 +1,18 @@
 package com.kalu.po.sum.dataStructures;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 public class Solution {
-
-    public enum SolutionState {
-        unCount,
-        Correct
-    }
     List<Bag> bags;
 
     public Solution(int i) {
-        List<Bag> protoBags = new ArrayList<Bag>(i);
+        bags = new CopyOnWriteArrayList<Bag>();
         for (int j = 0; j < i; ++j) {
-            protoBags.add(new Bag());
+            bags.add(new Bag());
         }
-        bags = Collections.unmodifiableList(protoBags);
+
     }
 
     public Bag get(int i) {
@@ -31,6 +26,20 @@ public class Solution {
     public Long getDiff() {
         Bag min = Collections.min(bags), max = Collections.max(bags);
         return Math.abs(min.sum() - max.sum());
+    }
+
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        sb.append('[');
+        for (Bag bag : bags) {
+            sb.append(bag.sum());
+            sb.append(',');
+        }
+
+        sb.append(']');
+
+        return sb.toString();
     }
 
 }

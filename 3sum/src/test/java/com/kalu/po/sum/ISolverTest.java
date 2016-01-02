@@ -25,13 +25,13 @@ public abstract class ISolverTest {
 
     static {
         dummyList = new Integer[3];
-        onlyOnes = new Integer[999];
+        onlyOnes = new Integer[9999];
         onlyOnesRem = new Integer[1000];
         tripleSmall = new Integer[24];
         tripleBig = new Integer[999999];
         Random rand = new Random(42);
         for (int i = 0; i < tripleSmall.length; i += 3) {
-            int num = Math.abs(rand.nextInt());
+            int num = Math.abs(rand.nextInt(1000));
             tripleSmall[i + 0] = num;
             tripleSmall[i + 1] = num;
             tripleSmall[i + 2] = num;
@@ -40,7 +40,7 @@ public abstract class ISolverTest {
         for (int i = 0; i < tripleBig.length; i += 3)
 
         {
-            int num = Math.abs(rand.nextInt());
+            int num = Math.abs(rand.nextInt(100));
             tripleBig[i + 0] = num;
             tripleBig[i + 1] = num;
             tripleBig[i + 2] = num;

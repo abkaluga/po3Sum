@@ -31,6 +31,7 @@ public class Bag implements Comparable<Bag> {
         elements.clear();
     }
 
+    @Override
     public int compareTo(Bag otherBag) {
         Long thisCount = count.get();
         return thisCount.compareTo(otherBag.sum());
