@@ -1,24 +1,23 @@
 package com.kalu.po.sum.dataStructures;
 
-import java.util.Collections;
-import java.util.LinkedList;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 import java.util.concurrent.atomic.AtomicLong;
 
 public class Bag implements Comparable<Bag> {
 
-    private List<Integer> elements = Collections.synchronizedList(new LinkedList<Integer>());
-    private AtomicLong count = new AtomicLong();
+    protected Set<SANumber> elements;
+    protected AtomicLong count;
 
-    public void addElement(Integer element) {
-        if (elements.add(element)) {
-            count.getAndAdd(element);
-        }
+    public Bag() {
+        elements = new HashSet<SANumber>();
+        count = new AtomicLong();
     }
 
-    public void removeElement(Integer element) {
-        if (elements.remove(element)) {
-            count.getAndAdd(-element);
+    public void addElement(Integer element) {
+        SANumber num = new SANumber(element.longValue());
+        if (elements.add(num)) {
+            count.getAndAdd(element);
         }
     }
 
@@ -42,7 +41,7 @@ public class Bag implements Comparable<Bag> {
         StringBuilder sb = new StringBuilder();
         sb.append(count.get());
         sb.append(" :[");
-        for (Integer i : elements) {
+        for (SANumber i : elements) {
             sb.append(" " + i.toString());
         }
         sb.append(']');

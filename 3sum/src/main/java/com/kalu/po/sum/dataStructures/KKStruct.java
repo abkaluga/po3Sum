@@ -30,7 +30,7 @@ public class KKStruct implements Comparable<KKStruct> {
         while (it.hasNext() && listIt.hasNext()) {
             KKNumber nextNum = it.next();
             Bag nextBag = listIt.next();
-            nextNum.represents.parallelStream()//
+            nextNum.represents.stream()//
                               .forEach((el) -> nextBag.addElement(el));
         }
         return sol;

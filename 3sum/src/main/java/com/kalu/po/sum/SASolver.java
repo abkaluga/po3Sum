@@ -1,66 +1,107 @@
 package com.kalu.po.sum;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.Random;
+import java.util.SortedSet;
+import java.util.concurrent.ConcurrentSkipListSet;
 
-import com.kalu.po.sum.dataStructures.Bag;
+import com.kalu.po.sum.dataStructures.SANumber;
 import com.kalu.po.sum.dataStructures.Solution;
+import com.kalu.po.sum.dataStructures.SortedBag;
 
 public class SASolver implements ISolver {
 
+    public enum SA_MODE {
+        FULL_RANDOM,
+        SEMI_RANDOM,
+        NON_RANDOM
+    };
+
     private static Random random = new Random();
+    SortedSet<SANumber> set = new ConcurrentSkipListSet<SANumber>();
+    SA_MODE mode;
+
+    public SASolver(SA_MODE mode) {
+        this.mode = mode;
+    }
 
     @Override
     public Solution solve(List<Integer> elements, int i) {
-        final Solution solution = new Solution(i);
-        Solution bestSolution;
-        Integer[] balance = new Integer[i];
-        final List<Integer> adviser = new ArrayList<Integer>();
-        Long min, max, diff = Long.MAX_VALUE;
-        int it = 0;
-
-        Arrays.fill(balance, 5);
-        prepareAdvise(i, balance, adviser);
-        bestSolution = solution;
         Collections.sort(elements, Collections.reverseOrder());
-        do {
 
-            solution.getAll().parallelStream().forEach(Bag::clear);
-            elements.parallelStream()//
-                    .forEach((element) -> {
-                        int index = Math.abs(random.nextInt(adviser.size()));
-                        solution//
-                                .get(adviser.get(index))//
-                                .addElement(element);
-                    });
-            min = Collections.min(solution.getAll()).sum();
-            max = Collections.max(solution.getAll()).sum();
-            if (diff > (max - min)) {
-                // System.err.printf("diff %d, %d-%d= %d\n", diff, max, min, max - min);
-                diff = (max - min);
-                it = 0;
-                bestSolution = new Solution(solution);
-            } else {
+        SortedBag[] bags = new SortedBag[i];
+        for (int j = 0; j < bags.length; ++j) {
+            bags[j] = new SortedBag();
+        }
+        if (mode == SA_MODE.NON_RANDOM) {
+            int it = 0;
+            for (int el : elements) {
+                bags[it].addElement(el);
+                it = (it + 1) % i;
 
-                ++it;
-                if (it > 1 << 19) {
-                    break;
-                }
             }
+        } else {
+            elements.parallelStream()//
+                    .forEach(//
+                             (el) -> bags[random.nextInt(i)].addElement(el));
+        }
+        SortedBag min = null, max = null;
+        long diff = Integer.MAX_VALUE;
+        int life = 1000;
+        if (mode == SA_MODE.SEMI_RANDOM) {
 
-        } while ((max - min) > 1);
-        return bestSolution;
+            do {
+                life--;
+                min = Collections.min(Arrays.asList(bags));
+                max = Collections.max(Arrays.asList(bags));
+                throwPottato(min, max);
+                min = Collections.min(Arrays.asList(bags));
+                max = Collections.max(Arrays.asList(bags));
+                if (diff < max.sum() - min.sum()) {
+                    diff = max.sum() - min.sum();
+                    life += 100;
+                }
+            } while (max.sum() - min.sum() != 0 && life > 0);
+        } else {
+
+            do {
+                life--;
+                int first = random.nextInt(bags.length), second;
+                while ((second = random.nextInt(bags.length)) == first)
+                    ;
+                int cmp = bags[first].compareTo(bags[second]);
+                if (cmp < 0) {
+                    max = bags[second];
+                    min = bags[first];
+                } else {
+                    max = bags[first];
+                    min = bags[second];
+                }
+                throwPottato(min, max);
+                min = Collections.min(Arrays.asList(bags));
+                max = Collections.max(Arrays.asList(bags));
+                if (diff < max.sum() - min.sum()) {
+                    diff = max.sum() - min.sum();
+                    life += 100;
+                }
+            } while (max.sum() - min.sum() != 0 && life > 0);
+
+        }
+        Solution sol = new Solution(bags.length);
+        sol.getAll().clear();
+        sol.getAll().addAll(Arrays.asList(bags));
+        return sol;
     }
 
-    private void prepareAdvise(int i, Integer[] balance, final List<Integer> adviser) {
-        adviser.clear();
-        for (int f = 0; f < i; ++f) {
-            for (int j = 0; j < balance[f]; ++j) {
-                adviser.add(f);
-            }
+    private void throwPottato(SortedBag min, SortedBag max) {
+        while (min.compareTo(max) < 0 || random.nextGaussian() > 0.7)
+
+        {
+            SANumber potato = max.getMin();
+            max.removeElement(potato);
+            min.addElement(potato);
         }
     }
 
