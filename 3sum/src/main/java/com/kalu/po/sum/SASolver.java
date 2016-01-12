@@ -19,7 +19,7 @@ public class SASolver implements ISolver {
         NON_RANDOM
     };
 
-    private static Random random = new Random();
+    private Random random = new Random(32);
     SortedSet<SANumber> set = new ConcurrentSkipListSet<SANumber>();
     SA_MODE mode;
 
@@ -50,7 +50,7 @@ public class SASolver implements ISolver {
         SortedBag min = null, max = null;
         long diff = Integer.MAX_VALUE;
         int life = 1000;
-        if (mode == SA_MODE.SEMI_RANDOM) {
+        if (mode == SA_MODE.SEMI_RANDOM || mode == SA_MODE.NON_RANDOM) {
 
             do {
                 life--;
@@ -84,7 +84,7 @@ public class SASolver implements ISolver {
                 max = Collections.max(Arrays.asList(bags));
                 if (diff < max.sum() - min.sum()) {
                     diff = max.sum() - min.sum();
-                    life += 100;
+                    life += incLife();
                 }
             } while (max.sum() - min.sum() != 0 && life > 0);
 
@@ -95,10 +95,23 @@ public class SASolver implements ISolver {
         return sol;
     }
 
-    private void throwPottato(SortedBag min, SortedBag max) {
-        while (min.compareTo(max) < 0 || random.nextGaussian() > 0.7)
+    private int incLife() {
+        int bound = 0;
+        if (mode.equals(SA_MODE.NON_RANDOM)) {
+            bound = 100 + random.nextInt(100);
+        }
+        if (mode.equals(SA_MODE.SEMI_RANDOM)) {
+            bound = 1000 + random.nextInt(1000);
+        }
+        if (mode.equals(SA_MODE.FULL_RANDOM)) {
+            bound = 100 + random.nextInt(100);
+        }
 
-        {
+        return bound;
+    }
+
+    private void throwPottato(SortedBag min, SortedBag max) {
+        while (min.compareTo(max) < 0 || random.nextGaussian() > 0.7) {
             SANumber potato = max.getMin();
             max.removeElement(potato);
             min.addElement(potato);

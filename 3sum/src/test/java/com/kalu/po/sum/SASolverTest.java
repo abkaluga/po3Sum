@@ -21,4 +21,12 @@ public abstract class SASolverTest {
             objectOfTest = new SASolver(SA_MODE.SEMI_RANDOM);
         }
     }
+
+    public static class SASolverFullRandomTest extends ISolverTest {
+
+        @BeforeClass
+        public static void setUp() {
+            objectOfTest = new SASolver(SA_MODE.FULL_RANDOM);
+        }
+    }
 }

@@ -3,6 +3,7 @@ package com.kalu.po.sum;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Random;
 
@@ -22,6 +23,9 @@ public abstract class ISolverTest {
     private static Integer[] onlyOnes;
     private static Integer[] onlyOnesRem;
     private static Integer[] antiGreedy = { 8, 5, 4, 4, 3, 2, 1 };
+
+    private static int bigNum = 4782969;
+    private static List<Integer> bigTest;
 
     static {
         dummyList = new Integer[3];
@@ -49,6 +53,13 @@ public abstract class ISolverTest {
         Arrays.fill(onlyOnesRem, 1);
         Arrays.fill(onlyOnes, 1);
         Arrays.fill(dummyList, 5);
+
+        bigTest = new LinkedList<Integer>();
+        do {
+            int num = rand.nextInt(10000) + 1;
+            bigNum -= num;
+            bigTest.add(num);
+        } while (bigNum > 0);
 
     }
 
@@ -130,6 +141,20 @@ public abstract class ISolverTest {
         Collections.shuffle(list);
         // Test
         solution = objectOfTest.solve(list, SIZE);
+        System.out.println(solution);
+        // Assert
+        Assert.assertEquals(Long.valueOf(0), solution.getDiff());
+    }
+
+    @Test
+    public void bigTest() {
+        // Setup
+        Solution solution;
+        List<Integer> list = bigTest;
+        Collections.shuffle(list);
+        // Test
+        solution = objectOfTest.solve(list, SIZE);
+        System.out.println(solution);
         // Assert
         Assert.assertEquals(Long.valueOf(0), solution.getDiff());
     }
