@@ -26,6 +26,7 @@ public abstract class ISolverTest {
 
     private static int bigNum = 4782969;
     private static List<Integer> bigTest;
+    private static List<Integer> diffTest;
 
     static {
         dummyList = new Integer[3];
@@ -59,6 +60,14 @@ public abstract class ISolverTest {
             int num = rand.nextInt(10000) + 1;
             bigNum -= num;
             bigTest.add(num);
+        } while (bigNum > 0);
+
+        diffTest = new LinkedList<Integer>();
+        bigNum = 4782969;
+        do {
+            int num = rand.nextInt(bigNum) + 1;
+            bigNum -= num;
+            diffTest.add(num);
         } while (bigNum > 0);
 
     }
@@ -136,6 +145,7 @@ public abstract class ISolverTest {
     @Test
     public void dummyTest() {
         // Setup
+        System.out.println("dummyTest");
         Solution solution;
         List<Integer> list = new ArrayList<Integer>(Arrays.asList(dummyList));
         Collections.shuffle(list);
@@ -150,6 +160,7 @@ public abstract class ISolverTest {
     public void bigTest() {
         // Setup
         Solution solution;
+        System.out.println("bigTest");
         List<Integer> list = bigTest;
         Collections.shuffle(list);
         // Test
@@ -157,6 +168,20 @@ public abstract class ISolverTest {
         System.out.println(solution);
         // Assert
         Assert.assertEquals(Long.valueOf(0), solution.getDiff());
+    }
+
+    @Test
+    public void diffTest() {
+        // Setup
+        Solution solution;
+        System.out.println("diffTest");
+        List<Integer> list = diffTest;
+        Collections.shuffle(list);
+        // Test
+        solution = objectOfTest.solve(list, SIZE);
+        System.out.println(solution);
+        // Assert
+        Assert.assertEquals(Long.valueOf(1549095), solution.getDiff());
     }
 
 }

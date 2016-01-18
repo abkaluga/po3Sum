@@ -7,7 +7,7 @@ import java.util.Random;
 import java.util.SortedSet;
 import java.util.concurrent.ConcurrentSkipListSet;
 
-import com.kalu.po.sum.dataStructures.SANumber;
+import com.kalu.po.sum.dataStructures.MyNumber;
 import com.kalu.po.sum.dataStructures.Solution;
 import com.kalu.po.sum.dataStructures.SortedBag;
 
@@ -20,7 +20,7 @@ public class SASolver implements ISolver {
     };
 
     private Random random = new Random(32);
-    SortedSet<SANumber> set = new ConcurrentSkipListSet<SANumber>();
+    SortedSet<MyNumber> set = new ConcurrentSkipListSet<MyNumber>();
     SA_MODE mode;
 
     public SASolver(SA_MODE mode) {
@@ -51,7 +51,7 @@ public class SASolver implements ISolver {
         long diff = Integer.MAX_VALUE;
         int life = 1000;
         if (mode == SA_MODE.SEMI_RANDOM || mode == SA_MODE.NON_RANDOM) {
-
+            // System.out.println("DETERNISTIC THROW POTATO");
             do {
                 life--;
                 min = Collections.min(Arrays.asList(bags));
@@ -65,8 +65,9 @@ public class SASolver implements ISolver {
                 }
             } while (max.sum() - min.sum() != 0 && life > 0);
         } else {
-
+            // System.out.println("RANDOM THROW POTATO");
             do {
+
                 life--;
                 int first = random.nextInt(bags.length), second;
                 while ((second = random.nextInt(bags.length)) == first)
@@ -104,15 +105,15 @@ public class SASolver implements ISolver {
             bound = 1000 + random.nextInt(1000);
         }
         if (mode.equals(SA_MODE.FULL_RANDOM)) {
-            bound = 100 + random.nextInt(100);
+            bound = 10000 + random.nextInt(10000);
         }
 
         return bound;
     }
 
     private void throwPottato(SortedBag min, SortedBag max) {
-        while (min.compareTo(max) < 0 || random.nextGaussian() > 0.7) {
-            SANumber potato = max.getMin();
+        while (!max.isEmpty() && (min.compareTo(max) < 0 || random.nextGaussian() > 0.7)) {
+            MyNumber potato = max.getMin();
             max.removeElement(potato);
             min.addElement(potato);
         }

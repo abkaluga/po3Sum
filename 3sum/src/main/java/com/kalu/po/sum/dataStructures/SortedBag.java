@@ -6,32 +6,34 @@ import java.util.concurrent.atomic.AtomicLong;
 
 public class SortedBag extends Bag {
 
+    private SortedSet<MyNumber> asSorted;
+
     public SortedBag() {
-        this.elements = new ConcurrentSkipListSet<SANumber>();
+
+        this.asSorted = new ConcurrentSkipListSet<MyNumber>();
+        this.elements = this.asSorted;
         count = new AtomicLong();
     }
 
-    public SANumber getMin() {
-        if (elements.isEmpty()) {
-            return null;
-        }
-        return ((SortedSet<SANumber>) elements).first();
+    public boolean isEmpty() {
+        return elements.isEmpty();
     }
 
-    public SANumber getMax() {
-        if (elements.isEmpty()) {
-            return null;
-        }
-        return ((SortedSet<SANumber>) elements).last();
+    public MyNumber getMin() {
+        return asSorted.first();
     }
 
-    public void addElement(SANumber element) {
+    public MyNumber getMax() {
+        return asSorted.last();
+    }
+
+    public void addElement(MyNumber element) {
         if (element != null && elements.add(element)) {
             count.getAndAdd(element.longValue());
         }
     }
 
-    public void removeElement(SANumber element) {
+    public void removeElement(MyNumber element) {
         if (element != null && elements.remove(element)) {
             count.getAndAdd((-1) * element.longValue());
         }

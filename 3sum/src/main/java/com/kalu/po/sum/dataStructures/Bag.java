@@ -6,16 +6,22 @@ import java.util.concurrent.atomic.AtomicLong;
 
 public class Bag implements Comparable<Bag> {
 
-    protected Set<SANumber> elements;
+    protected Set<MyNumber> elements;
     protected AtomicLong count;
 
     public Bag() {
-        elements = new HashSet<SANumber>();
+        elements = new HashSet<MyNumber>();
         count = new AtomicLong();
     }
 
+    public Bag(Bag bag) {
+        elements = new HashSet<>();
+        elements.addAll(bag.elements);
+        count = new AtomicLong(bag.count.get());
+    }
+
     public void addElement(Integer element) {
-        SANumber num = new SANumber(element.longValue());
+        MyNumber num = new MyNumber(element.longValue());
         if (elements.add(num)) {
             count.getAndAdd(element);
         }
@@ -41,7 +47,7 @@ public class Bag implements Comparable<Bag> {
         StringBuilder sb = new StringBuilder();
         sb.append(count.get());
         sb.append(" :[");
-        for (SANumber i : elements) {
+        for (MyNumber i : elements) {
             sb.append(" " + i.toString());
         }
         sb.append(']');

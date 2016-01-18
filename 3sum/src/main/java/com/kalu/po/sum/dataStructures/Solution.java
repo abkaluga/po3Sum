@@ -4,7 +4,7 @@ import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 
-public class Solution {
+public class Solution implements Comparable<Solution> {
     List<Bag> bags;
 
     public Solution(int i) {
@@ -16,7 +16,17 @@ public class Solution {
     }
 
     public Solution(Solution s) {
-        bags = new LinkedList<Bag>(s.bags);
+        bags = new LinkedList<Bag>();
+        for (Bag b : s.bags) {
+            bags.add(new Bag(b));
+        }
+    }
+
+    public Solution(List<Bag> bags) {
+        this.bags = new LinkedList<>();
+        for (Bag b : bags) {
+            bags.add(new Bag(b));
+        }
     }
 
     public Bag get(int i) {
@@ -44,6 +54,12 @@ public class Solution {
         sb.append(']');
 
         return sb.toString();
+    }
+
+    @Override
+    public int compareTo(Solution arg0) {
+        int odp = getDiff().compareTo(arg0.getDiff());
+        return getDiff().compareTo(arg0.getDiff());
     }
 
 }

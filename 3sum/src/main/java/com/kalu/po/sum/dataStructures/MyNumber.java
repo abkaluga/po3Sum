@@ -2,7 +2,7 @@ package com.kalu.po.sum.dataStructures;
 
 import java.util.concurrent.atomic.AtomicLong;
 
-public class SANumber extends Number implements Comparable<SANumber> {
+public class MyNumber extends Number implements Comparable<MyNumber> {
 
     /**
      * 
@@ -15,13 +15,13 @@ public class SANumber extends Number implements Comparable<SANumber> {
 
     private static AtomicLong diffGen = new AtomicLong();
 
-    public SANumber(Long num) {
+    public MyNumber(Long num) {
         this.num = num;
         this.diff = diffGen.incrementAndGet();
     }
 
     @Override
-    public int compareTo(SANumber arg0) {
+    public int compareTo(MyNumber arg0) {
         int cmp = num.compareTo(arg0.num);
         return cmp == 0 ? diff.compareTo(arg0.diff) : cmp;
     }

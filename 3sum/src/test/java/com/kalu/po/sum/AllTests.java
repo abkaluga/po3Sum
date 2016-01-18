@@ -9,7 +9,8 @@ import com.kalu.po.sum.SASolverTest.SASolverNonRandomTest;
 import com.kalu.po.sum.SASolverTest.SASolverSemiRandomTest;
 
 @RunWith(Suite.class)
-@SuiteClasses({ GreedySolverTest.class, KKSolverTest.class, SASolverNonRandomTest.class, SASolverSemiRandomTest.class, SASolverFullRandomTest.class })
+@SuiteClasses({ GreedySolverTest.class, KKSolverTest.class, SASolverNonRandomTest.class, SASolverSemiRandomTest.class, SASolverFullRandomTest.class,
+                BruteSolverTest.class })
 public class AllTests {
 
 }
